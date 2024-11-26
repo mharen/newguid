@@ -40,18 +40,20 @@ app.MapGet("/", context =>
                 <html>
                     <head>
                         <title>New GUID!</title>
+                        <meta name="viewport" content="width=450, initial-scale=1" />
                         <style>
                             body { font-family: system-ui, "Segoe UI", "Ubuntu", "Roboto", "Noto Sans", "Droid Sans", sans-serif; }
-                            body, footer { margin: 0.5rem;}
+                            body, footer { margin: 1rem;}
                             footer { position: fixed; bottom: 0; left: 0; }
 
                             h1 { margin-bottom: 1rem; }
                             dl { font-family: ui-monospace, "Segoe UI Mono", "Liberation Mono", Menlo, Monaco, Consolas, monospace; }
-                            dl { display: grid; grid-template-columns: 1rem auto; gap: 1rem 0.5rem; }
+                            dl { display: grid; grid-template-columns: 1ch 38ch 1ch; gap: 1rem 0.5rem; }
                             dt { font-weight: bold; }
                             dd { margin: 0; }
                             dd.in { margin-left: 1ch; }
 
+                            button{padding:0; border:0;background:none;}
                             p { 
                               font-style: italic;
                               animation: ease 1s forwards congrats;
@@ -75,8 +77,20 @@ app.MapGet("/", context =>
                         <p>Congratulations!</p>
                         <footer><a href="https://www.wassupy.com">Wassupy</a></footer>
                     </body>
+                    <script>
+                        [...document.getElementsByTagName("dd")].forEach(dd => {
+                            const btn = document.createElement("button");
+                            btn.innerText = "📋"; btn.title = "Copy";
+                            btn.addEventListener("click", function(e) {
+                                const text = e.target.previousElementSibling.innerText;
+                                navigator.clipboard.writeText(text);
+                                e.target.innerText = "✔";
+                            });
+                            dd.insertAdjacentElement("afterend", btn);
+                        });
+                    </script>
                 </html>
-                """, "text/html");
+                """, "text/html; charset=utf-8");
     }
 
     // default to text/plain if no Accept or Content-Type header matches
