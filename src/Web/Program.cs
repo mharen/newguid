@@ -40,20 +40,22 @@ app.MapGet("/", context =>
                 <html>
                     <head>
                         <title>New GUID!</title>
-                        <meta name="viewport" content="width=450, initial-scale=1" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
                         <style>
+                            * { box-sizing: border-box; }
                             body { font-family: system-ui, "Segoe UI", "Ubuntu", "Roboto", "Noto Sans", "Droid Sans", sans-serif; }
                             body, footer { margin: 1rem;}
                             footer { position: fixed; bottom: 0; left: 0; }
-
+                            body, button{ font-size: min(16px, 3vw); }
                             h1 { margin-bottom: 1rem; }
                             dl { font-family: ui-monospace, "Segoe UI Mono", "Liberation Mono", Menlo, Monaco, Consolas, monospace; }
-                            dl { display: grid; grid-template-columns: 1ch 38ch 1ch; gap: 1rem 0.5rem; }
+                            dl { display: grid; grid-template-columns: 1ch 38ch 2ch; gap: 1em .5em; }
                             dt { font-weight: bold; }
                             dd { margin: 0; }
                             dd.in { margin-left: 1ch; }
 
-                            button{padding:0; border:0;background:none;}
+                            button{ padding:0; border:0; background:none; max-height: 1rem; cursor: pointer; }
+
                             p { 
                               font-style: italic;
                               animation: ease 1s forwards congrats;
@@ -62,7 +64,7 @@ app.MapGet("/", context =>
                             }
                             @keyframes congrats { from { opacity: 0; } to { opacity: 1; } }
 
-                            // thank you EM: https://meyerweb.com/eric/thoughts/2023/01/16/minimal-dark-mode-styling/
+                            /* thank you EM: https://meyerweb.com/eric/thoughts/2023/01/16/minimal-dark-mode-styling/ */
                             @media (prefers-color-scheme: dark) { html { filter: invert(1); } }
                         </style>
                     </head>
@@ -84,7 +86,7 @@ app.MapGet("/", context =>
                             btn.addEventListener("click", function(e) {
                                 const text = e.target.previousElementSibling.innerText;
                                 navigator.clipboard.writeText(text);
-                                e.target.innerText = "✔";
+                                e.target.innerText = "✔️";
                             });
                             dd.insertAdjacentElement("afterend", btn);
                         });
