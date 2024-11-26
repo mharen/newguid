@@ -39,9 +39,8 @@ app.MapGet("/", context =>
                 $$$"""
                 <html>
                     <head>
-                        <title>Guid</title>
+                        <title>New GUID!</title>
                         <style>
-                            html { font-size: 14px; }
                             body { font-family: system-ui, "Segoe UI", "Ubuntu", "Roboto", "Noto Sans", "Droid Sans", sans-serif; }
                             body, footer { margin: 0.5rem;}
                             footer { position: fixed; bottom: 0; left: 0; }
