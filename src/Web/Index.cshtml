@@ -31,14 +31,16 @@
             font-size: min(16px, 3vw);
         }
 
-        h1 {
-            margin-bottom: 1rem;
-        }
-
         ul {
             font-family: ui-monospace, "Segoe UI Mono", "Liberation Mono", Menlo, Monaco, Consolas, monospace;
-            list-style-type: none;
             padding: 0;
+        }
+
+
+        li {
+            /* use flex so that you can double- or triple-click on the guid to select it, without catching the copy button */
+            display: flex;
+            gap: 0.5rem;
         }
 
         li+li {
@@ -46,11 +48,8 @@
         }
 
         li.in {
+            /* indent these by one character to improve alignment */
             margin-left: 1ch;
-        }
-
-        li>div {
-            display: inline-block;
         }
 
         button {
@@ -103,16 +102,16 @@
             <div>@Model.Guid.P</div>
         </li>
         <li class="in">
-            <div>@Model.Guid.N</div>
+            <div>@Model.Guid.D</div>
         </li>
         <li class="in">
-            <div>@Model.Guid.D</div>
+            <div>@Model.Guid.N</div>
         </li>
     </ul>
     <p>Congratulations!</p>
-    <footer><a href="https://www.wassupy.com">Wassupy</a></footer>
+    <footer><a href="https://www.wassupy.com" rel="me">Wassupy</a></footer>
     <script>
-        //add copy buttons if JS enabled
+        // add copy buttons if JS enabled
         if (typeof Array.from === 'function' && navigator.clipboard) {
 
             Array.from(document.getElementsByTagName("li")).forEach(li => {

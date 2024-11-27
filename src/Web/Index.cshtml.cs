@@ -9,7 +9,7 @@ public class IndexModel : PageModel
 {
     static JsonSerializerOptions jsonOptions = new() { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
-    public GuidResponse Guid => new(System.Guid.NewGuid());
+    public GuidResponse Guid { get; } = new(System.Guid.NewGuid());
 
     public IActionResult OnGet()
     {
