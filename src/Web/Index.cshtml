@@ -1,0 +1,140 @@
+﻿@page
+@model Web.IndexModel
+
+<html>
+
+<head>
+    <title>New GUID!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, "Segoe UI", "Ubuntu", "Roboto", "Noto Sans", "Droid Sans", sans-serif;
+        }
+
+        body,
+        footer {
+            margin: 1rem;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        body,
+        button {
+            font-size: min(16px, 3vw);
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            font-family: ui-monospace, "Segoe UI Mono", "Liberation Mono", Menlo, Monaco, Consolas, monospace;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li+li {
+            margin-top: 1rem;
+        }
+
+        li.in {
+            margin-left: 1ch;
+        }
+
+        li>div {
+            display: inline-block;
+        }
+
+        button {
+            padding: 0;
+            border: none;
+            background: none;
+            max-height: 1rem;
+            cursor: pointer;
+        }
+
+        a:any-link,
+        button {
+            color: rebeccapurple;
+        }
+
+        p {
+            font-style: italic;
+            opacity: 0;
+            animation: ease 1s forwards congrats;
+            animation-delay: 1s;
+            margin-top: 2rem;
+        }
+
+        @@keyframes congrats {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* thank you EM: https://meyerweb.com/eric/thoughts/2023/01/16/minimal-dark-mode-styling/ */
+        @@media (prefers-color-scheme: dark) {
+            html {
+                filter: invert(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>New GUID ✨</h1>
+    <ul id="guids">
+        <li>
+            <div>@Model.Guid.B</div>
+        </li>
+        <li>
+            <div>@Model.Guid.P</div>
+        </li>
+        <li class="in">
+            <div>@Model.Guid.N</div>
+        </li>
+        <li class="in">
+            <div>@Model.Guid.D</div>
+        </li>
+    </ul>
+    <p>Congratulations!</p>
+    <footer><a href="https://www.wassupy.com">Wassupy</a></footer>
+    <script>
+        //add copy buttons if JS enabled
+        if (typeof Array.from === 'function' && navigator.clipboard) {
+
+            Array.from(document.getElementsByTagName("li")).forEach(li => {
+                const btn = document.createElement("button");
+                btn.innerText = "copy"; btn.title = "Copy";
+                li.insertAdjacentElement("beforeend", btn);
+            });
+
+            // handle copy buttons
+            document.getElementById("guids").addEventListener("click", function (e) {
+                if (e.target.tagName === "BUTTON") {
+                    const text = e.target.previousElementSibling.innerText;
+                    navigator.clipboard.writeText(text).then(() => {
+                        let t = e.target.innerText;
+                        e.target.innerText = t.startsWith("ok!") ? t + "!" : "ok!";
+                    });
+                    e.stopPropagation();
+                }
+            });
+
+        }
+    </script>
+</body>
+
+</html>
