@@ -73,6 +73,9 @@
             animation-delay: 1s;
             margin-top: 2rem;
         }
+        button{
+            font-style: italic;
+        }
 
         @@keyframes congrats {
             from {
@@ -97,16 +100,16 @@
     <h1>New GUID ✨</h1>
     <ul id="guids">
         <li>
-            <div>@Model.Guid.B</div>
+            <div id="uuid-b">@Model.Guid.B</div>
         </li>
         <li>
-            <div>@Model.Guid.P</div>
+            <div id="uuid-p">@Model.Guid.P</div>
         </li>
         <li class="in">
-            <div>@Model.Guid.D</div>
+            <div id="uuid-d">@Model.Guid.D</div>
         </li>
         <li class="in">
-            <div>@Model.Guid.N</div>
+            <div id="uuid-n">@Model.Guid.N</div>
         </li>
     </ul>
     <p>Congratulations!</p>
@@ -133,6 +136,32 @@
                 }
             });
 
+        }
+
+        // add "Another!" button if possible
+        if (crypto && crypto.randomUUID) {
+            const b = document.getElementById('uuid-b'),
+                p = document.getElementById('uuid-p'),
+                d = document.getElementById('uuid-d'),
+                n = document.getElementById('uuid-n');
+            
+            const wrapper = document.createElement('p');
+            const button = document.createElement('button');
+            wrapper.appendChild(button);
+            button.innerText = "Another!";
+
+            button.addEventListener('click', () => {
+                const uuid = crypto.randomUUID();
+
+                b.innerText = `{${uuid}}`;
+                p.innerText = `(${uuid})`;
+                d.innerText = uuid;
+                n.innerText = uuid.replace(/[-]/g, '');
+            });
+
+
+            const footer = document.getElementsByTagName('footer')[0];
+            footer.insertAdjacentElement('beforebegin', wrapper);
         }
     </script>
 </body>
