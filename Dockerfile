@@ -1,11 +1,9 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
-WORKDIR /App
+FROM golang:1.23-alpine AS build
+WORKDIR /app
 COPY src/Web/ .
-RUN dotnet publish -c Release -o out
+RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o server .
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /App
+FROM scratch
+COPY --from=build /app/server /server
 EXPOSE 80
-ENV DOTNET_URLS=http://*:80
-ENTRYPOINT ["dotnet", "Web.dll"]
-COPY --from=build-env /App/out .
+ENTRYPOINT ["/server"]
