@@ -80,7 +80,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			page = strings.Replace(page, "{{P}}", guid.P, 1)
 			page = strings.Replace(page, "{{D}}", guid.D, 1)
 			page = strings.Replace(page, "{{N}}", guid.N, 1)
-			w.Header().Set("Content-Type", "text/html")
+			w.Header().Set("Content-Type", "text/html; charset=utf-8")
 			fmt.Fprint(w, page)
 			return
 		}
