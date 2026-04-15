@@ -92,7 +92,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, guid.D)
 }
 
+func robotsHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/plain")
+	fmt.Fprint(w, "User-agent: *\nAllow: /\n")
+}
+
 func main() {
+	http.HandleFunc("/robots.txt", robotsHandler)
 	http.HandleFunc("/", handler)
 	fmt.Println("Listening on :80")
 	log.Fatal(http.ListenAndServe(":80", nil))

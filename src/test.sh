@@ -54,6 +54,15 @@ for test in "${tests[@]}"; do
     echo
 done
 
+# --- robots.txt ---
+echo "=> robots.txt"
+RESP=$(curl -s -D- "$BASE_URL/robots.txt")
+check "Content-Type" "text/plain" "$(headers "$RESP")"
+BODY=$(body "$RESP")
+check "User-agent" "User-agent: *" "$BODY"
+check "Allow" "Allow: /" "$BODY"
+echo
+
 # --- Uniqueness ---
 echo "=> Uniqueness"
 G1=$(curl -s -H "Accept: text/plain" "$BASE_URL" | tr -d '[:space:]')
