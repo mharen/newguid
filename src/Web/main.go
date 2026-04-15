@@ -13,6 +13,9 @@ import (
 //go:embed index.html
 var indexHTML string
 
+//go:embed favicon.ico
+var faviconICO []byte
+
 type guidResponse struct {
 	N    string `json:"n"`
 	D    string `json:"d"`
@@ -92,12 +95,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, guid.D)
 }
 
+func faviconHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "image/x-icon")
+	w.Header().Set("Cache-Control", "public, max-age=604800")
+	w.Write(faviconICO)
+}
+
 func robotsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	fmt.Fprint(w, "User-agent: *\nAllow: /\n")
 }
 
 func main() {
+	http.HandleFunc("/favicon.ico", faviconHandler)
 	http.HandleFunc("/robots.txt", robotsHandler)
 	http.HandleFunc("/", handler)
 	fmt.Println("Listening on :80")
